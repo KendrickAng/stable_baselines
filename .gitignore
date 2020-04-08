@@ -1,6 +1,6 @@
-sac_pendulum.zip
-cartpole_v1_acktr.zip
-cartpole_v1_ppo2.zip
+tutorials/sac_pendulum.zip
+tutorials/cartpole_v1_acktr.zip
+tutorials/cartpole_v1_ppo2.zip
 
 autodrift_gp/misc/DonkeyVae-v0-level-0.pkl
 autodrift_gp/misc/DonkeyVae-v0-level-0_best.zip
