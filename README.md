@@ -9,4 +9,7 @@ This implementation uses the Soft-Actor Critic algorithm in our agent, which tak
 ## Model
 ![Model](images/software_model.jpg) 
 
-The Gym environment replaces the Drive Agent (top-left), which then communicates with the Pi camera and receives feedback from the motorised car.
+The Drive Agent includes an additional Gym Environment (top-left), which then communicates with the Pi camera and receives feedback from the motorised car.
+* The Gym Environment consists of the underlying SAC model, a Car Controller and a Car Server. It models the actual task environment of the car learning agent.
+* The Car Controller implements the business logic for checking if the car has left the track, reward calculation at each time step, etc..
+* The Car Server provides a socket channel for the Drive Agent to send commands to the car actuators, which move the car accordingly.
