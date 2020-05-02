@@ -19,7 +19,7 @@ import os
 import logging
 from logging import INFO
 
-logging.basicConfig(level=INFO, format="%(levelname)s [line %(lineno)d]: %(message)s")
+logging.basicConfig(level=INFO, format="%(levelname)s [%(filename)s line %(lineno)d]: %(message)s")
 logger = logging.getLogger()
 logger.disabled = False
 
@@ -35,7 +35,7 @@ class DriveAgent:
         #print(self._interpreter.get_output_details())
         #_, self._input_height, self._input_width, _ = self._interpreter.get_input_details()[0]['shape']
 
-        self.env = AutoDriftEnv(const_throttle=0.5)
+        self.env = AutoDriftEnv(const_throttle=0.3)
         # self.model = SacModel(policy=CnnPolicy, env=self.env)
         self.model = SAC(policy=CnnPolicy, env=self.env)
 

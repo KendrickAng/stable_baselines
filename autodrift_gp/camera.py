@@ -8,7 +8,7 @@ import numpy as np
 
 import logging
 from logging import INFO, DEBUG
-logging.basicConfig(level=DEBUG, format="%(levelname)s [line %(lineno)d]: %(message)s")
+logging.basicConfig(level=INFO, format="%(levelname)s [%(filename)s line %(lineno)d]: %(message)s")
 logger = logging.getLogger()
 logger.disabled = False
 

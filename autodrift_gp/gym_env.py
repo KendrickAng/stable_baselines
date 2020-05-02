@@ -64,15 +64,15 @@ class AutoDriftEnv(gym.Env):
         # order the car
         self.viewer.take_action(action)
         observation, reward, done, info = self.viewer.observe()
-        logger.debug("Iteration done: {0}".format(done))
+        logger.debug("Reward: {0}, isDone: {1}".format(reward, done))
 
         return observation, reward, done, info
 
     def reset(self):
-        print("Resetting and sleeping for 5 seconds...")
+        print("One env timestep done. Resetting after 0.5s...")
         # reset state of car controller, then sleep for 5s to replace car to start position manually
         self.viewer.reset()
-        time.sleep(5)
+        time.sleep(0.5)
         print("Now resuming...")
 
         observation, reward, done, info = self.viewer.observe()

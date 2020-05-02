@@ -8,7 +8,7 @@ from car_server import NavInterface
 
 import logging
 from logging import INFO, DEBUG
-logging.basicConfig(level=DEBUG, format="%(levelname)s [line %(lineno)d]: %(message)s")
+logging.basicConfig(level=INFO, format="%(levelname)s [%(filename)s line %(lineno)d]: %(message)s")
 logger = logging.getLogger()
 logger.disabled = False
 
@@ -63,7 +63,7 @@ class CarController:
 
         done = self.is_game_over()
 
-        return self.image_array, done, self.calc_reward(done), {}
+        return self.image_array, self.calc_reward(done), done, {}
 
     def calc_reward(self, done):
         """
@@ -143,7 +143,7 @@ def closest_colour(requested_colour):
     :return:
     """
     min_colours = {}
-    print(webcolors.CSS2_HEX_TO_NAMES)
+    # print(webcolors.CSS2_HEX_TO_NAMES)
     for key, name in webcolors.CSS2_HEX_TO_NAMES.items():
         r_c, g_c, b_c = webcolors.hex_to_rgb(key)
         rd = (r_c - requested_colour[0]) ** 2

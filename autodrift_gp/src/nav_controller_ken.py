@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import rospy
-from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 
 import socket
@@ -9,7 +8,7 @@ import pickle
 
 import logging
 from logging import INFO, DEBUG
-logging.basicConfig(level=INFO, format="%(levelname)s [line %(lineno)d]: %(message)s")
+logging.basicConfig(level=INFO, format="%(levelname)s [%(filename)s line %(lineno)d]: %(message)s")
 logger = logging.getLogger()
 logger.disabled = False
 
@@ -26,22 +25,28 @@ class NavController:
         self.run()
 
     def run(self):
+
         while True:
             data = self._connection.recv(1024)
             if data:
                 try:
                     msg = pickle.loads(data)
-                    logger.warning("Output received.")
-                    logger.warning(msg)
+                    # logger.warning("Output received.")
+                    # logger.warning(msg)
                     # NOTE: the rest of the code in this section has been deliberately omitted
-                    # PUBLISH TO '/cmd_vel_nav'
-                    # THEN DO_ACTION
-                    pub = rospy.Publisher('/cmd_vel_nav', String, queue_size=10)
-                    pub.publish(String('foo'))
+                    # [steering, throttle]
+                    arr = msg[0]
+                    nav_msg = Twist()
+                    # steering angle [-1.0, 1.0]
+                    nav_msg.angular.z = arr[0]
+                    # throttle [-1.0, 1.0]
+                    nav_msg.linear.x = arr[1]
+                    self._cmd_vel_nav_pub.publish(nav_msg)
 
                 except Exception as e:
-                    # print('NavController: socket exception', e)
-                    pass
+                    print('NavController: socket exception', e)
+                    print(pickle.loads(data))
+                    # pass
             else:
                 break
 
@@ -49,10 +54,10 @@ class NavController:
 
 
 if __name__ == "__main__":
-    # rospy.init_node('nav_controller')
-    # NavController()
-    # rospy.spin()
-    n = NavController()
-    n.run()
+    rospy.init_node('nav_controller')
+    NavController()
+    rospy.spin()
+    # n = NavController()
+    # n.run()
 
 
